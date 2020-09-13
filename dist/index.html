@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="style.css">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.14.0/css/all.css" integrity="sha384-HzLeBuhoNPvSl5KYnjx0BT+WB0QEEqLprO+NBkkk5gbc67FTaL7XIGa2w1L0Xbgc" crossorigin="anonymous">
+
+	<title>WeatherApp-E</title>
+</head>
+<body>
+
+	<div id="search">
+		<input type="text" placeholder="enter city name" id="cityInp">
+		<button id="inpBtn">Check Weather</button>
+	</div>
+
+	<div id="result-container">
+
+	</div>
+
+	<script id="city-template" type="text/x-handlebars-template">
+		
+			<div id="placeholder">
+				<h4>{{name}}</h4>
+				<p>{{temperature}}</p>
+				<p>{{humidity}}</p>
+				<p>{{description}}</p>
+				<i id='plus' class="fas fa-plus-circle"></i>
+				<i id='minus' class="fas fa-minus-circle"></i>
+			</div>
+			
+	</script>
+	
+	<script src="model.js"></script>
+	<script src="view.js"></script>
+	<script src="/handlebars/dist/handlebars.js"></script>
+	<script src="/jquery/dist/jquery.js"></script>
+	<script src="main.js"></script>
+</body>
+</html>

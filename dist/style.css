@@ -1,0 +1,11 @@
+.content{
+line-height: 2.5rem;
+font-size: 1.5rem;
+}
+.add-remove{
+	line-height: 3rem;
+}
+
+#inpBtn{
+	width: 100%;
+}

@@ -22,14 +22,14 @@ $(document).ready(async function () {
 })
 
 $('#result-container').on('click', '#plus', function () {
-	const cityName = $(this).closest('#placeholder').find('h4').html()
+	const cityName = $(this).closest('#placeholder').find('h4').html().trim()
 	const cityObj = { name: cityName }
 
 	tManager.saveCity(cityObj)
 })
 
 $('#result-container').on('click', '#minus', function () {
-	const cityName = $(this).closest('#placeholder').find('h4').html()
+	const cityName = $(this).closest('#placeholder').find('h4').html().trim()
 	tManager.removeCity(cityName)
 
 })

@@ -24,8 +24,7 @@
 	</div>
 
 	<script id="city-template" type="text/x-handlebars-template">
-		
-			<div id="placeholder" class="col s12 m6 l3 #e3f2fd blue lighten-5">
+			<div class="placeholder col s12 m6 l3 #e3f2fd blue lighten-5" city-name="{{toLowerCase name}}">
 				<h4 class="center-align">
 					{{name}}
 				</h4>
@@ -43,9 +42,10 @@
 				</div>
 
 				<div class="center-align add-remove">
-					<a class="add-remove-btn btn-floating btn-small waves-effect waves-light green"><i id='plus' class="small material-icons">add</i></a>
+					<a class="btn_plus add-remove-btn btn-floating btn-small waves-effect waves-light green"><i class="small material-icons">add</i></a>
 
-					<a class="btn-floating btn-small waves-effect waves-light red"><i id='minus' class="small material-icons">remove</i></a>
+					<a class="btn_minus btn-floating btn-small waves-effect waves-light red"><i class="small material-icons">remove</i></a>
+					<a class="btn_delete btn-floating btn-small waves-effect waves-light red"><i class="small material-icons">delete</i></a>
 				</div>
 				
 			</div>
@@ -53,10 +53,21 @@
 	</script>
 
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+	<script src="socket.io/socket.io.js"></script>
+	<script src="proxserve.js"></script>
+	<script src="oh.js"></script>
 	<script src="model.js"></script>
 	<script src="view.js"></script>
-	<script src="/handlebars/dist/handlebars.js"></script>
-	<script src="/jquery/dist/jquery.js"></script>
+	<script src="handlebars.js"></script>
+	<script>
+Handlebars.registerHelper('toLowerCase', function (str) {
+	if(str && typeof str === "string") {
+		return str.toLowerCase();
+	}
+	return '';
+});
+	</script>
+	<script src="jquery.js"></script>
 	<script src="main.js"></script>
 </body>
 </html>

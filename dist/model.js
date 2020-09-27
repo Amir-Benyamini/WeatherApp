@@ -12,33 +12,26 @@ class TempManager {
 
 		return this.cityData;
 	}
+
 	getCityData = async function (cityName) {
-		let result = await $.get(`/city/${cityName}`)
-
-		let newCityData = { name: result.name, temperature: result.main.temp, humidity: result.main.humidity, description: result.weather[0].description }
-
-		this.cityData.push(newCityData)
-
-		return newCityData
+		$.get(`/city/${cityName}`);
 	}
-	saveCity = async function (cityName) {
+
+	saveCity = async function (city) {
 		$.ajax({
 			type: 'POST',
 			url: '/city',
-			data: cityName,
-			success: () => alert('city is now saved!'),
+			data: { name: city },
+			success: () => alert(`city ${city} is now saved!`),
 		})
 	}
 
-	removeCity = async function (cityName) {
-
+	removeCity = async function (city) {
 		$.ajax({
 			type: 'DELETE',
-			url: `/city/${cityName}`,
-			success: () => alert('city is now removed!'),
+			url: `/city/${city}`,
+			success: () => alert(`city ${city} is now removed!`),
 		})
 	}
-
-
 }
 

@@ -16,7 +16,8 @@
     "handlebars": "^4.7.6",
     "jquery": "^3.5.1",
     "materialize-css": "^1.0.0-rc.2",
-    "mongoose": "^5.10.4"
+    "mongoose": "^5.10.4",
+    "object-hub": "^1.0.0"
   },
   "devDependencies": {},
   "repository": {

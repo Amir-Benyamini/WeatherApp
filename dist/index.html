@@ -4,57 +4,41 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" href="style.css">
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.14.0/css/all.css" integrity="sha384-HzLeBuhoNPvSl5KYnjx0BT+WB0QEEqLprO+NBkkk5gbc67FTaL7XIGa2w1L0Xbgc" crossorigin="anonymous">
-	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
-	<title>WeatherApp-E</title>
+	<title>WeatherApp</title>
 </head>
-<body class="#e0f2f1 teal lighten-5">
+<body>
+
+	<header>
+		<h1>WeatherApp</h1>
+		<p>Search any city and save your favorites</p>
+	</header>
 
 	<div id="search">
-		<input type="text" placeholder="enter city name" id="cityInp" class="#fafafa grey lighten-5">
-		<button id="inpBtn" class="btn waves-effect waves-light" type="submit" name="action">
-		 Check Weather
-		</button>
+		<input type="text" placeholder="Enter city name..." id="cityInp" autocomplete="off">
+		<button id="inpBtn" type="button">Search</button>
 	</div>
 
-	<div id="result-container" class="row">
-		
-	</div>
+	<div id="result-container"></div>
 
 	<script id="city-template" type="text/x-handlebars-template">
-		
-			<div id="placeholder" class="col s12 m6 l3 #e3f2fd blue lighten-5">
-				<h4 class="center-align">
-					{{name}}
-				</h4>
-
-				<div class="center-align content">
-					Temp: {{temperature}} <i class="fas fa-thermometer-half"></i>
-				</div>
-
-				<div class="center-align content">
-					Humidity: {{humidity}}%
-				</div>
-
-				<div class="center-align content">
-					<i class="fas fa-cloud-sun"></i> {{description}} 
-				</div>
-
-				<div class="center-align add-remove">
-					<a class="add-remove-btn btn-floating btn-small waves-effect waves-light green"><i id='plus' class="small material-icons">add</i></a>
-
-					<a class="btn-floating btn-small waves-effect waves-light red"><i id='minus' class="small material-icons">remove</i></a>
-				</div>
-				
+		<div class="weather-card">
+			<div class="card-city">{{name}}</div>
+			<div class="card-icon">{{{icon}}}</div>
+			<div class="card-temp">{{temperature}}<span> °C</span></div>
+			<div class="card-humidity"><i class="fas fa-tint"></i> {{humidity}}% humidity</div>
+			<div class="card-divider"></div>
+			<div class="card-desc">{{description}}</div>
+			<div class="card-actions">
+				<button class="card-btn btn-add" title="Save city"><i class="fas fa-plus" id="plus"></i></button>
+				<button class="card-btn btn-remove" title="Remove city"><i class="fas fa-minus" id="minus"></i></button>
 			</div>
-			
+		</div>
 	</script>
 
 	<script src="/jquery/dist/jquery.js"></script>
 	<script src="/handlebars/dist/handlebars.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 	<script src="model.js"></script>
 	<script src="view.js"></script>
 	<script src="main.js"></script>

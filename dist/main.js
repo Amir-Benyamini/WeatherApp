@@ -8,13 +8,30 @@ const loadPage = async function () {
 }
 
 const handleSearch = async function () {
-	let cityData = await tManager.getCityData($('#cityInp').val())
-	render.renderData(cityData)
+	const cityName = $('#cityInp').val().trim()
+	if (!cityName) {
+		alert('Please enter a city name.')
+		return
+	}
+
+	try {
+		let cityData = await tManager.getCityData(cityName)
+		render.renderData(cityData)
+	} catch (err) {
+		const msg = err.responseJSON && err.responseJSON.error ? err.responseJSON.error : `City "${cityName}" not found.`
+		alert(msg)
+	}
 }
 
 
 $('#inpBtn').on('click', async function () {
 	handleSearch()
+})
+
+$('#cityInp').on('keypress', function (e) {
+	if (e.key === 'Enter') {
+		handleSearch()
+	}
 })
 
 $(document).ready(async function () {
@@ -31,5 +48,4 @@ $('#result-container').on('click', '#plus', function () {
 $('#result-container').on('click', '#minus', function () {
 	const cityName = $(this).closest('#placeholder').find('h4').html().trim()
 	tManager.removeCity(cityName)
-
 })

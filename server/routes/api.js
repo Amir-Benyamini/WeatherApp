@@ -5,39 +5,69 @@ const City = require("../models/city")
 const router = express.Router()
 
 router.get('/city/:city', async function (req, res) {
-	let city = req.params.city
+	const city = req.params.city.trim()
 
-	let apiRequest = await axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=e2522630235d331673040866c32bdf37&units=metric`)
-	let data = apiRequest.data
+	if (!city || city.length < 2) {
+		return res.status(400).json({ error: 'Please provide a valid city name.' })
+	}
 
-	res.send(data)
+	try {
+		const apiKey = process.env.WEATHER_API_KEY
+		const apiRequest = await axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${encodeURIComponent(city)}&appid=${apiKey}&units=metric`)
+		res.send(apiRequest.data)
+	} catch (err) {
+		if (err.response && err.response.status === 404) {
+			return res.status(404).json({ error: `City "${city}" not found.` })
+		}
+		console.error('Weather API error:', err.message)
+		res.status(500).json({ error: 'Failed to fetch weather data. Please try again.' })
+	}
 })
 
 router.get('/cities', async function (req, res) {
-
-	let findCities = await City.find({})
-	res.send(findCities)
+	try {
+		const cities = await City.find({})
+		res.send(cities)
+	} catch (err) {
+		console.error('DB error fetching cities:', err.message)
+		res.status(500).json({ error: 'Failed to fetch saved cities.' })
+	}
 })
 
-router.post('/city', function (req, res) {
-	let cityNameObj = req.body
-	let cityInstance = new City(cityNameObj)
+router.post('/city', async function (req, res) {
+	const cityData = req.body
 
-	cityInstance.save()
-	res.send(cityInstance)
+	if (!cityData || !cityData.name) {
+		return res.status(400).json({ error: 'City name is required.' })
+	}
+
+	try {
+		const cityInstance = new City(cityData)
+		await cityInstance.save()
+		res.send(cityInstance)
+	} catch (err) {
+		if (err.code === 11000) {
+			return res.status(409).json({ error: 'City is already saved.' })
+		}
+		console.error('DB error saving city:', err.message)
+		res.status(500).json({ error: 'Failed to save city.' })
+	}
 })
 
 router.delete('/city/:city', async function (req, res) {
-	let cityString = req.params.city
-	let firstLatter = cityString.slice(0, 1).toUpperCase()
-	let restOfstring = cityString.slice(1, cityString.length)
+	const cityName = req.params.city.trim()
 
-	let cityName = firstLatter + restOfstring
+	if (!cityName) {
+		return res.status(400).json({ error: 'City name is required.' })
+	}
 
-	let deletedCity = await City.deleteMany({ name: cityName }, function (err) {
-	})
-	res.send(deletedCity)
-
+	try {
+		const deletedCity = await City.deleteMany({ name: new RegExp(`^${cityName}$`, 'i') })
+		res.send(deletedCity)
+	} catch (err) {
+		console.error('DB error deleting city:', err.message)
+		res.status(500).json({ error: 'Failed to remove city.' })
+	}
 })
 
 module.exports = router
